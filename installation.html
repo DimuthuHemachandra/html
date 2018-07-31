@@ -1,0 +1,178 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Installation &#8212; PREPDWI V1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     'V1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Prepdwi Pipeline" href="pipeline.html" />
+    <link rel="prev" title="Prepdwi Documentation" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="installation">
+<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+<p>Prepdwi is built into a singularity container which you can easily download an image of it from <a class="reference external" href="https://singularity-hub.org/collections/392">https://singularity-hub.org/collections/392</a></p>
+<p>Once you downloaded the latest stable version of prepdwi, follow the steps below to run it.</p>
+<div class="section" id="install-singularity">
+<h2>Install Singularity<a class="headerlink" href="#install-singularity" title="Permalink to this headline">¶</a></h2>
+<p>To run a singularity image, first you need to have singularity installed in your local computer or server. To install singularity, please follow the instructions in the singularity website.</p>
+<p><a class="reference external" href="https://www.sylabs.io/guides/2.5.1/user-guide/">https://www.sylabs.io/guides/2.5.1/user-guide/</a></p>
+</div>
+<div class="section" id="running-prepdwi">
+<h2>Running prepdwi<a class="headerlink" href="#running-prepdwi" title="Permalink to this headline">¶</a></h2>
+<p>Once the singularity set up in your computer you can start running prepdwi. The following is an example of running prepdwi on a set of BIDS data.</p>
+<div class="section" id="example">
+<h3>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h3>
+<p>For this example, let’s assume that your downloaded singularity image is saved in the path home/singularity/Singularity.0.07g and your BIDS data is saved in home/data/bids. you can rename the image name from Singularity.0.07g to prepdwi_7g for simplicity</p>
+<p>The data in the “bids” folder should be in the BIDS format. For moredetails about BIDS format, read:
+<a class="reference external" href="http://bids.neuroimaging.io/">http://bids.neuroimaging.io/</a></p>
+<div class="section" id="participant-level-analysis">
+<h4>participant level analysis<a class="headerlink" href="#participant-level-analysis" title="Permalink to this headline">¶</a></h4>
+<p>In prepdwi, there are several levels of analysis named as participant, group and participant2. To learn more about these analysis levels and optional arguments/flags, read (put a link here)</p>
+<p>The basic structure for running prepdwi is:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>singularity run &lt;path_to_prepdwi_image&gt; &lt;bids_dir&gt; &lt;output_dir&gt; <span class="o">{</span>participant,group,participant2<span class="o">}</span> &lt;optional arguments&gt;
+</pre></div>
+</div>
+<p>For our example create a directory to save the output inside the project directory as “derrivatives”.</p>
+<p>At the command line type:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">singularity</span> <span class="n">run</span> <span class="n">home</span><span class="o">/</span><span class="n">singularity</span><span class="o">/</span><span class="n">prepdwi_7g</span> <span class="n">home</span><span class="o">/</span><span class="n">project</span><span class="o">/</span><span class="n">bids</span> <span class="n">home</span><span class="o">/</span><span class="n">project</span><span class="o">/</span><span class="n">derrivatives</span> <span class="n">participant</span>
+</pre></div>
+</div>
+<p>Or, if you have access to Khanlab Graham server and have <a class="reference external" href="https://github.com/khanlab/neuroglia-helpers">neuroglia helpers</a>. installed you can submit it as a job.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>bidsBatch prepdwi_0.0.7g &lt;bids_dir&gt; &lt;output_dir&gt; participant
+</pre></div>
+</div>
+<p>This will run the participant level analysis for all the subjects in the bids folder and will save the resultst to the derrivatives folder. This code is running the <a class="reference external" href="https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FDT/UserGuide#BEDPOSTX">FSL BEDPOSTX</a>. which takes a long time and we highly recommend using highspeed computer server to run this code. (Typical time is 24 hours in Sharcnet)
+Once the process is completed, you will see a “work” folder and a “prepdwi” folder inside the “derrivatives” directory. To learn what to expect inside thses folders, read (link to the cookbook)</p>
+</div>
+<div class="section" id="group-level-analysis">
+<h4>group level analysis<a class="headerlink" href="#group-level-analysis" title="Permalink to this headline">¶</a></h4>
+<p>After running the participant level analysis, you can run a group level analysis to see how good the registarions are. To know more about the group level analysis, read (link)</p>
+<p>At the command line type:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">singularity</span> <span class="n">run</span> <span class="n">home</span><span class="o">/</span><span class="n">singularity</span><span class="o">/</span><span class="n">prepdwi_7g</span> <span class="n">home</span><span class="o">/</span><span class="n">project</span><span class="o">/</span><span class="n">bids</span> <span class="n">home</span><span class="o">/</span><span class="n">project</span><span class="o">/</span><span class="n">derrivatives</span> <span class="n">group</span>
+</pre></div>
+</div>
+<p>Or, for Khanlab members</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>bidsBatch prepdwi_0.0.7g &lt;bids_dir&gt; &lt;output_dir&gt; group
+</pre></div>
+</div>
+<p>IMPORTANT: Makesure that the ourput directory is the same as the one for “participant” level.</p>
+<p>Once the group level analysis is completed, you will see a new folder inside the “derrivatives” directory called “reports”. There you will see a list of html files for each subject which shows the qulaity of the registration at each process. The failed registrations can be identified if the red contour plots are not overlapping with the template image. For the registration failed cases, you can re-run prepdwi participant level using –reg_init_participant flag which is explained in the (link to cookbook).</p>
+</div>
+<div class="section" id="participant2-level-analysis">
+<h4>participant2 level analysis<a class="headerlink" href="#participant2-level-analysis" title="Permalink to this headline">¶</a></h4>
+<p>If the participant1 level is completed you can run participant2 level analysis on the data. To know more about participant2 level, read (link)</p>
+<p>At the command line type:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">singularity</span> <span class="n">run</span> <span class="n">home</span><span class="o">/</span><span class="n">singularity</span><span class="o">/</span><span class="n">prepdwi_7g</span> <span class="n">home</span><span class="o">/</span><span class="n">project</span><span class="o">/</span><span class="n">bids</span> <span class="n">home</span><span class="o">/</span><span class="n">project</span><span class="o">/</span><span class="n">derrivatives</span> <span class="n">participant2</span>
+</pre></div>
+</div>
+<p>Or, for Khanlab members</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>bidsBatch prepdwi_0.0.7g &lt;bids_dir&gt; &lt;output_dir&gt; participant2
+</pre></div>
+</div>
+<p>IMPORTANT: Makesure that the ourput directory is the same as the one for “participant” level.</p>
+<p>Once the participant2 level analysis is completed, you will see a new folder inside the “derrivatives” directory called “bedpost”. Also you will see several csv files for connectivity matrix and FA matrices.</p>
+<blockquote>
+<div><span class="target" id="index-0"></span></div></blockquote>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">PREPDWI</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#install-singularity">Install Singularity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#running-prepdwi">Running prepdwi</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pipeline.html">Prepdwi Pipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="support.html">Support</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Prepdwi Documentation</a></li>
+      <li>Next: <a href="pipeline.html" title="next chapter">Prepdwi Pipeline</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Dr. Ali Khan.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/installation.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

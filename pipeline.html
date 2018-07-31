@@ -1,0 +1,192 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Prepdwi Pipeline &#8212; PREPDWI V1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     'V1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Support" href="support.html" />
+    <link rel="prev" title="Installation" href="installation.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="prepdwi-pipeline">
+<h1>Prepdwi Pipeline<a class="headerlink" href="#prepdwi-pipeline" title="Permalink to this headline">¶</a></h1>
+<p>Prepdwi has three level of analysis named as participant, group and participant2.</p>
+<p>usage:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">prepdwi</span> <span class="n">bids_dir</span> <span class="n">output_dir</span> <span class="p">{</span><span class="n">participant</span><span class="p">,</span><span class="n">group</span><span class="p">,</span><span class="n">participant2</span><span class="p">}</span> <span class="o">&lt;</span><span class="n">optional</span> <span class="n">arguments</span><span class="o">&gt;</span>
+          <span class="p">[</span><span class="o">--</span><span class="n">participant_label</span> <span class="n">PARTICIPANT_LABEL</span> <span class="p">[</span><span class="n">PARTICIPANT_LABEL</span><span class="o">...</span><span class="p">]]</span>
+          <span class="p">[</span><span class="o">--</span><span class="n">matching_dwi</span> <span class="n">MATCHING_PATTERN</span><span class="p">]</span>
+          <span class="p">[</span><span class="o">--</span><span class="n">matching_T1w</span> <span class="n">MATCHING_STRING</span><span class="p">]</span>
+          <span class="p">[</span><span class="o">--</span><span class="n">reg_init_participant</span> <span class="n">PARTICIPANT_LABEL</span><span class="p">]</span>
+          <span class="p">[</span><span class="o">--</span><span class="n">grad_coeff_file</span> <span class="n">GRAD_COEFF_FILE</span><span class="p">]</span>
+          <span class="p">[</span><span class="o">-</span><span class="n">w</span> <span class="n">WORK_DIR</span><span class="p">]</span>  <span class="p">(</span><span class="n">scratch</span> <span class="n">directory</span><span class="p">)</span>
+
+          <span class="p">[</span><span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">regT1</span><span class="p">]</span>
+          <span class="p">[</span><span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">topup</span><span class="p">]</span>
+          <span class="p">[</span><span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">bedpost</span><span class="p">]</span>
+          <span class="p">[</span><span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">dke</span><span class="p">]</span>
+          <span class="p">[</span><span class="o">--</span><span class="n">n_cpus</span> <span class="n">NCPUS</span><span class="p">]</span> <span class="p">(</span><span class="k">for</span> <span class="n">bedpost</span><span class="p">,</span> <span class="n">default</span><span class="p">:</span> <span class="mi">8</span><span class="p">)</span>
+
+ <span class="n">participant2</span> <span class="p">(</span><span class="n">probtrack</span> <span class="n">connectivity</span><span class="p">)</span> <span class="n">options</span><span class="p">:</span>
+          <span class="p">[</span><span class="o">--</span><span class="n">nprobseeds</span><span class="p">]</span> <span class="n">N</span> <span class="p">(</span><span class="k">for</span> <span class="n">probtrackx</span><span class="p">,</span> <span class="n">default</span><span class="p">:</span> <span class="mi">5000</span><span class="p">)</span>
+      <span class="n">Choose</span> <span class="n">built</span><span class="o">-</span><span class="ow">in</span> <span class="n">atlas</span><span class="p">:</span>
+          <span class="p">[</span><span class="o">--</span><span class="n">atlas</span> <span class="n">NAME</span> <span class="p">(</span><span class="n">default</span><span class="p">:</span> <span class="n">dosenbach</span><span class="p">)</span>
+
+       <span class="n">Available</span> <span class="n">built</span><span class="o">-</span><span class="ow">in</span> <span class="n">atlas</span> <span class="n">labels</span><span class="o">/</span><span class="n">csv</span><span class="p">:</span>
+          <span class="n">cort_striatum_midbrain</span>        <span class="n">dosenbach</span>  <span class="n">yeo17</span>  <span class="n">yeo17_striatum</span>  <span class="n">yeo7</span>  <span class="n">yeo7_striatum</span>
+
+       <span class="n">Customize</span> <span class="n">atlas</span> <span class="n">labels</span><span class="p">:</span>
+          <span class="p">{</span><span class="o">--</span><span class="n">atlas_space</span> <span class="n">NAME</span> <span class="p">(</span><span class="n">MNI152_1mm</span> <span class="ow">or</span> <span class="n">MNI152NLin2009cAsym</span><span class="p">)</span>
+          <span class="p">[</span><span class="o">--</span><span class="n">atlas_label_nii</span> <span class="n">NIFTI</span>
+          <span class="p">[</span><span class="o">--</span><span class="n">atlas_label_csv</span> <span class="n">LABEL_INDEX_CSV</span>
+</pre></div>
+</div>
+<div class="section" id="participant-level">
+<h2>Participant Level<a class="headerlink" href="#participant-level" title="Permalink to this headline">¶</a></h2>
+<p>At the participant level the T1 data and DWI data are being pre-processed using the following steps.</p>
+<div class="section" id="denoising-and-unringing">
+<h3>Denoising and unringing<a class="headerlink" href="#denoising-and-unringing" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="top-up">
+<h3>top-up<a class="headerlink" href="#top-up" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="eddy-current-correction">
+<h3>Eddy Current Correction<a class="headerlink" href="#eddy-current-correction" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="t1w-t1w-template-mni152-1mm-and-mni152nlin2009casym-registration">
+<h3>T1w-T1w template (MNI152_1mm and MNI152NLin2009cAsym) registration<a class="headerlink" href="#t1w-t1w-template-mni152-1mm-and-mni152nlin2009casym-registration" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="bedpost">
+<h3>BEDPOST<a class="headerlink" href="#bedpost" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="group-level">
+<h2>Group Level<a class="headerlink" href="#group-level" title="Permalink to this headline">¶</a></h2>
+<p>At the Group Level analysis, prepdwi reads all the processed data in participant level and creates a qulaity report for each subject showing how good the registrations are. You can’t run group level for a single subject. Once the group level analysis is completed, you will see a new folder inside the “derrivatives” directory called “reports”. There you will see a list of html files for each subject which shows the qulaity of the registration at each process. The failed registrations can be identified if the red contour plots are not overlapping with the template image. For the registration failed cases, you can re-run prepdwi participant level using -reg_init flag.</p>
+<p>To use the –reg_init_participant flag, you have to pick a subject which has a successful good registration. Then Prepwi will use that as the initial image to register the images of the subjects you want.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>singularity run home/singularity/prepdwi_7g home/project/bids home/project/derrivatives participant --reg_init_participant &lt;subj-ID&gt;
+</pre></div>
+</div>
+<p>Or, for Khanlab members</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>bidsBatch prepdwi_0.0.7g &lt;bids_dir&gt; &lt;output_dir&gt; participant --reg_init_participant &lt;subj-ID&gt;
+</pre></div>
+</div>
+<p>Here the subject ID should be as same as in the work folder. Not as in the bids folder. If there are multimple session for a subject, the session name will be added as a suffix to the subject ID in the work folder. Therefore you have to use the subject ID as it is in the work folder.</p>
+</div>
+<div class="section" id="participant2-level">
+<h2>Participant2 Level<a class="headerlink" href="#participant2-level" title="Permalink to this headline">¶</a></h2>
+<p>You will want to use the <code class="xref std std-option docutils literal"><span class="pre">-i</span></code> flag,
+which while ignore URLs matching the passed regex:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">crawler</span> <span class="o">-</span><span class="n">i</span> <span class="s2">&quot;^blog/&quot;</span> <span class="o">&lt;</span><span class="n">url</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>This will only crawl pages that contain your blog URL.</p>
+<blockquote>
+<div><p>You will want to use the <code class="xref std std-option docutils literal"><span class="pre">-i</span></code> flag,
+which while ignore URLs matching the passed regex:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">crawler</span> <span class="o">-</span><span class="n">i</span> <span class="s2">&quot;pdf$&quot;</span> <span class="o">&lt;</span><span class="n">url</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>This will ignore URLs that end in PDF.</p>
+</div></blockquote>
+<span class="target" id="index-0"></span></div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">PREPDWI</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Prepdwi Pipeline</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#participant-level">Participant Level</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#group-level">Group Level</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#participant2-level">Participant2 Level</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="support.html">Support</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="installation.html" title="previous chapter">Installation</a></li>
+      <li>Next: <a href="support.html" title="next chapter">Support</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Dr. Ali Khan.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/pipeline.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
